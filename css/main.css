@@ -6,3 +6,38 @@ th, td {
 body {
   background-color: #212529f0;
 }
+
+.remover-border {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.js-search-list {
+  height: 250px;
+  overflow-y: auto;
+  border-top-left-radius: 0 !important;
+}
+
+.js-input:focus {
+  box-shadow: none;
+  border-color: transparent;
+}
+.js-search-item:hover {
+  opacity: 0.7;
+}
+
+.list-group-item:nth-child(1) {
+  border-top-right-radius: 0 ;
+  border-top-left-radius: 0 !important;
+}
+
+.js-search-list::-webkit-scrollbar {
+  background-color: #404243;
+  width: 8px;
+  border-bottom-right-radius: 6px;
+}
+.js-search-list::-webkit-scrollbar-thumb {
+  background-color: #7b7c7d;
+  width: 8px;
+  border-radius: 5px;
+}

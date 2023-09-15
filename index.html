@@ -11,12 +11,17 @@
 <body>
   
   <div class="container">
-    <form>
-      <select>
-        <option value="kunlik" selected>Kunlik</option>
-        <option value="haftalik">Haftalik</option>
-        <option value="oylik">Oylik</option>
+    <form class="d-flex w-100 my-5 column-gap-5">
+      <select class="w-25 form-control fw-semibold text-warning-emphasis">
+        <option class="fw-semibold" value="kunlik" selected>Kunlik</option>
+        <option class="fw-semibold" value="haftalik">Haftalik</option>
+        <option class="fw-semibold" value="oylik">Oylik</option>
       </select>
+      <label class="position-relative">
+        <input class="js-input form-control bg-dark-subtle fw-semibold text-warning-emphasis" type="text" placeholder="Viloyatni tanglang">
+        
+        <ul class="js-search-list position-absolute fw-semibold list-unstyled w-100 border-dark list-group text-white"></ul>
+      </label>
     </form>
     <ul class="list list-unstyled mt-3 d-flex flex-column row-gap-3">
     </ul>
@@ -38,6 +43,7 @@
   
   
   <script src="./js/bootstrap.min.js"></script>
+  <script src="./js/regions.js"></script>
   <script src="./js/main.js"></script>
 </body>
 </html>
