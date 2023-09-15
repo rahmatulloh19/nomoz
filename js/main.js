@@ -4,8 +4,29 @@ const elSelect = document.querySelector("select");
 const elRegionInput = document.querySelector(".js-input");
 const elRegionList = document.querySelector(".js-search-list");
 const elForm = document.querySelector(".js-form");
-const label = document.querySelector(".position-relative");
+const elLabel = document.querySelector(".position-relative");
+const elTime = document.querySelector(".js-time");
+const elTimeLeft = document.querySelector(".js-time-left");
 const fragmentElements = document.createDocumentFragment();
+
+
+function updateTime() {
+  const currentDate = new Date();
+
+  const month = currentDate.getMonth();
+  const monthName = months[month];
+  const day = currentDate.getDate().toString().padStart(2, 0);
+  const hour = currentDate.getHours().toString().padStart(2, 0);
+  const minutes = currentDate.getMinutes().toString().padStart(2, 0);
+  const seconds = currentDate.getSeconds().toString().padStart(2, 0);
+
+  elTime.textContent = `
+  ${day} ${monthName} ${hour}-${minutes}-${seconds}
+  `
+  elTime.setAttribute("datetime", `${currentDate.getFullYear()}-${(month+1).toString().padStart(2, 0)}-${day}T${hour}:${minutes}:${seconds}`);
+}
+
+setInterval(updateTime, 500)
 
 
 elRegionList.classList.add("d-none")
@@ -142,7 +163,7 @@ function renderRegions(data, node) {
     })
     elRegionList.appendChild(fragmentElements);
     elRegionInput.setAttribute("style", "border-bottom-left-radius:0")
-    label.classList.add("remover-border");
+    elLabel.classList.add("remover-border");
   }
 }
 
@@ -168,7 +189,7 @@ elRegionInput.addEventListener("keyup", () => {
 document.body.addEventListener("click", evt => {
   if(!evt.target.matches(".list-group-item")) {
     elRegionList.classList.add("d-none");
-    label.classList.remove("remover-border");
+    elLabel.classList.remove("remover-border");
     elRegionInput.setAttribute("style", "border-bottom-left-radius:inherit");
   }
   if(evt.target.matches(".js-input")) {
@@ -209,4 +230,3 @@ elForm.addEventListener("submit", evt => {
 
   getData(`https://islomapi.uz/api/present/day?region=${elRegionInput.value}`, "Day");
 })
-
