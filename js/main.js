@@ -3,11 +3,15 @@ const table = document.querySelector("table");
 const elSelect = document.querySelector("select");
 const elRegionInput = document.querySelector(".js-input");
 const elRegionList = document.querySelector(".js-search-list");
+const elForm = document.querySelector(".js-form");
+const label = document.querySelector(".position-relative");
 const fragmentElements = document.createDocumentFragment();
+
 
 elRegionList.classList.add("d-none")
 
 async function renderDay(data) {
+  await data;
   elList.innerHTML = ""
   if(elList.classList.contains("d-none")) {
     elList.classList.remove("d-none")
@@ -115,13 +119,13 @@ async function getData(url, type) {
 getData("https://islomapi.uz/api/present/day?region=Toshkent", "Day")
 
 elSelect.addEventListener("change", () => {
-  if(elSelect.value == "kunlik") {
+  if(elSelect.value == "Day") {
     getData("https://islomapi.uz/api/present/day?region=Toshkent", "Day")
   }
-  if(elSelect.value == "haftalik") {
+  if(elSelect.value == "Week") {
     getData("https://islomapi.uz/api/present/week?region=Toshkent", "Week")
   }
-  if(elSelect.value == "oylik") {
+  if(elSelect.value == "Month") {
     getData("https://islomapi.uz/api/monthly?region=Toshkent&month=4", "Month");
   }
 })
@@ -137,13 +141,15 @@ function renderRegions(data, node) {
       fragmentElements.appendChild(liElement);
     })
     elRegionList.appendChild(fragmentElements);
-    elRegionInput.classList.add("remover-border")
+    elRegionInput.setAttribute("style", "border-bottom-left-radius:0")
+    label.classList.add("remover-border");
   }
 }
 
 elRegionInput.addEventListener("keyup", () => {
   let elRegionInputValue = elRegionInput.value.trim().toLowerCase();
   
+  // uppercasing the first character of input
   elRegionInput.value = elRegionInputValue.slice(0, 1).toUpperCase() + elRegionInputValue.slice(1);
   
   const findedRegions = regions.filter(item => {
@@ -162,11 +168,12 @@ elRegionInput.addEventListener("keyup", () => {
 document.body.addEventListener("click", evt => {
   if(!evt.target.matches(".list-group-item")) {
     elRegionList.classList.add("d-none");
-    elRegionInput.classList.remove("remover-border");
+    label.classList.remove("remover-border");
+    elRegionInput.setAttribute("style", "border-bottom-left-radius:inherit");
   }
   if(evt.target.matches(".js-input")) {
     const loweredValue = elRegionInput.value.toLowerCase();
-
+    
     if(elRegionInput.value) {
       const findedRegions = regions.filter(item => {
         const lowerCaseItem = item.toLowerCase();
@@ -174,6 +181,8 @@ document.body.addEventListener("click", evt => {
         return lowerCaseItem.includes(loweredValue)
       })
       renderRegions(findedRegions, elRegionList)
+    } else {
+      renderRegions(regions, elRegionList);
     }
   }
 })
@@ -183,6 +192,21 @@ elRegionList.addEventListener("click", evt => {
   if(elRegionInput.textContent) {
     elRegionList.classList.add("d-none")
   }
+
+  getData("https://islomapi.uz/api/present/week?region=Toshkent", "Week")
+  getData("https://islomapi.uz/api/monthly?region=Toshkent&month=4", "Month");
+
+
+  if(elSelect.value === "Day") getData(`https://islomapi.uz/api/present/day?region=${elRegionInput.value}`, elSelect.value);
+  if(elSelect.value === "Week") getData(`https://islomapi.uz/api/present/week?region=${elRegionInput.value}`, elSelect.value);
+  if(elSelect.value === "Month") getData(`https://islomapi.uz/api/monthly?region=${elRegionInput.value}`, elSelect.value);
 })
 
+
+elForm.addEventListener("submit", evt => {
+  evt.preventDefault()
+  console.log(elSelect.value);
+
+  getData(`https://islomapi.uz/api/present/day?region=${elRegionInput.value}`, "Day");
+})
 

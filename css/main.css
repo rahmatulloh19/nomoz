@@ -8,8 +8,8 @@ body {
 }
 
 .remover-border {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 }
 
 .js-search-list {
@@ -23,7 +23,7 @@ body {
   border-color: transparent;
 }
 .js-search-item:hover {
-  opacity: 0.7;
+  background-color: #9fa4a9 !important;
 }
 
 .list-group-item:nth-child(1) {
